@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('code')->unique();
+            $table->unsignedBigInteger('code')->unique();
             $table->string('status');
             $table->dateTime('imported_t');
             $table->string('url');
@@ -24,11 +24,11 @@ return new class extends Migration {
             $table->string('cities')->nullable();
             $table->string('purchase_places');
             $table->string('stores');
-            $table->string('ingredients_text');
+            $table->text('ingredients_text');
             $table->string('traces');
             $table->string('serving_size');
-            $table->float('serving_quantity');
-            $table->float('nutriscore_score');
+            $table->string('serving_quantity');
+            $table->string('nutriscore_score');
             $table->string('nutriscore_grade');
             $table->string('main_category');
             $table->string('image_url');

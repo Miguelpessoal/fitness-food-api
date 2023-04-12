@@ -3,26 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use App\Http\Requests\StoreProductsRequest;
+use App\Http\Requests\{StoreProductsRequest, UpdateProductsRequest};
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Services\CreateProductService;
 
 class ProductController extends Controller
 {
+    public function __construct(protected CreateProductService $createProductService)
+    {}
+
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
 
         return response()->json($products);
     }
 
-    public function store(
-        StoreProductsRequest $request
-    ): \Illuminate\Http\JsonResponse {
+    public function store(StoreProductsRequest $request)
+    {
         try {
-            $data = $request->validated();
-
-            Product::create($data);
+            $this->createProductService->run($request->validated());
         } catch (\Throwable $th) {
             throw new ApiException('', 422, [$th->getMessage()]);
         }
@@ -37,9 +37,16 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateProductsRequest $request, string $id)
     {
-        //
+        try {
+            $product = Product::find($id);
+            $product->update($request->validated());
+        } catch (\Throwable $th) {
+            throw new ApiException('', 422, [$th->getMessage()]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(string $id): \Illuminate\Http\JsonResponse
