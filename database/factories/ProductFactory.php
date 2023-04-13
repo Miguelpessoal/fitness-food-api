@@ -30,7 +30,7 @@ class ProductFactory extends Factory
             'stores' => $this->faker->name(),
             'ingredients_text' => $this->faker->name(),
             'traces' => $this->faker->name(),
-            'serving_size',
+            'serving_size' => $this->faker->name(),
             'serving_quantity' => $this->faker->randomFloat(2, 0, 1000),
             'nutriscore_score' => $this->faker->randomFloat(2, 0, 1000),
             'nutriscore_grade' => $this->faker->randomElement([

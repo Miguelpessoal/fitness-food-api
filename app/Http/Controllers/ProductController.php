@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\{StoreProductsRequest, UpdateProductsRequest};
 use App\Models\Product;
 use App\Services\CreateProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function store(StoreProductsRequest $request)
+    public function store(Request $request)
     {
         try {
             $this->createProductService->run($request->validated());
