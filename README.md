@@ -15,6 +15,9 @@ The project "Fitness Food" is intended to query and import data from an open sou
 
 - composer install
 
+### Need run the migrations:
+- php artisan migrate
+
 #### Right away, run this command to start your api:
 
 - php artisan serve
