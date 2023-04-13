@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 
 class SearchController extends Controller
 {
-    public function __invoke(SearchRequest $request)
+    public function __invoke(SearchRequest $request): JsonResponse
     {
         $filteredData = Product::query()
             ->where('code', 'like', "%{$request->search}%")

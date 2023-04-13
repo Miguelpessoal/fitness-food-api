@@ -6,32 +6,28 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\{StoreProductsRequest, UpdateProductsRequest};
 use App\Models\Product;
 use App\Services\CreateProductService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
     public function __construct(protected CreateProductService $createProductService)
     {}
 
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
         $products = Product::paginate(10);
 
         return response()->json($products);
     }
 
-    public function store(Request $request)
+    public function store(StoreProductsRequest $request)
     {
-        try {
-            $this->createProductService->run($request->validated());
-        } catch (\Throwable $th) {
-            throw new ApiException('', 422, [$th->getMessage()]);
-        }
+        $this->createProductService->run($request->file->getPathname());
 
         return response()->json(['success' => true]);
     }
 
-    public function show(string $id): \Illuminate\Http\JsonResponse
+    public function show(string $id): JsonResponse
     {
         $product = Product::findOrFail($id);
 
@@ -50,7 +46,7 @@ class ProductController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function destroy(string $id): \Illuminate\Http\JsonResponse
+    public function destroy(string $id): JsonResponse
     {
         $product = Product::findOrFail($id);
         $product->delete();

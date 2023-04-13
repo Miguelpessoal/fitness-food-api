@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -30,5 +29,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'openfoodfacts' => [
+        'index_url' => 'https://challenges.coode.sh/food/data/json/index.txt',
+        'fields_url' =>
+            'https://challenges.coode.sh/food/data/json/data-fields.txt',
+    ],
 ];

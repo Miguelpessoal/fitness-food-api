@@ -3,23 +3,23 @@
 namespace App\Services;
 
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 
 class CreateProductService
 {
-    public function run(object $request): void
+    public function run($path): void
     {
-        $file = $request->file('file');
-        $path = Storage::putFile('temp', $file);
+        $file = fopen($path, 'r');
 
-        $content = Storage::get($path);
-        $data = json_decode($content, true);
+        while (!feof($file)) {
+            $line = fgets($file);
+            $data = json_decode($line, true);
 
-        foreach ($data as $product) {
-            $product['status'] = 'draft';
-            $product['imported_t'] = now();
+            $data['status'] = 'draft';
+            $data['imported_t'] = now();
 
-            Product::create($product);
+            Product::create($data);
         }
+
+        fclose($file);
     }
 }
