@@ -24,6 +24,6 @@ The project "Fitness Food" is intended to query and import data from an open sou
 
 ## To run the tests:
 
-- yarn test
+- yarn test or ./vendor/bin/pest
 
 This is a challenge by Coodesh
