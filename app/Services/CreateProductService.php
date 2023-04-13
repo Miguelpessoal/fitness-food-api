@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Models\Product;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 class CreateProductService
 {
     public function run($path): void
@@ -14,12 +15,46 @@ class CreateProductService
             $line = fgets($file);
             $data = json_decode($line, true);
 
-            $data['status'] = 'draft';
-            $data['imported_t'] = now();
+            if (!empty($data)) {
+                $validateData = $this->rules($data);
 
-            Product::create($data);
+                Product::create($validateData);
+            }
         }
 
         fclose($file);
+    }
+
+    public function rules($data): array
+    {
+        $rules = [
+            'code' => ['integer'],
+            'status' => ['nullable', 'string'],
+            'imported_t' => ['nullable', 'date'],
+            'url' => ['string'],
+            'creator' => ['string'],
+            'created_t' => ['integer'],
+            'last_modified_t' => ['integer'],
+            'product_name' => ['string'],
+            'quantity' => ['string'],
+            'brands' => ['string'],
+            'categories' => ['string'],
+            'labels' => ['string'],
+            'cities' => ['nullable', 'string'],
+            'purchase_places' => ['string'],
+            'stores' => ['string'],
+            'ingredients_text' => ['string'],
+            'traces' => ['string'],
+            'serving_size' => ['string'],
+            'serving_quantity' => ['numeric'],
+            'nutriscore_score' => ['numeric'],
+            'nutriscore_grade' => ['string'],
+            'main_category' => ['string'],
+            'image_url' => ['string'],
+        ];
+
+        $validateData = Validator::make($data, $rules)->validate();
+
+        return $validateData;
     }
 }

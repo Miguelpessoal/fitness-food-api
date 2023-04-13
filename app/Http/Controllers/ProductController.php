@@ -20,9 +20,14 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function store(StoreProductsRequest $request)
+    public function store(StoreProductsRequest $request): JsonResponse
     {
+        try {
         $this->createProductService->run($request->file->getPathname());
+
+        } catch (\Throwable $th) {
+            throw new ApiException('', 201, ['Errors occurred! However, the correct data was properly saved.']);
+        }
 
         return response()->json(['success' => true]);
     }
@@ -34,7 +39,7 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update(UpdateProductsRequest $request, string $id)
+    public function update(UpdateProductsRequest $request, string $id): JsonResponse
     {
         try {
             $product = Product::find($id);
@@ -49,7 +54,7 @@ class ProductController extends Controller
     public function destroy(string $id): JsonResponse
     {
         $product = Product::findOrFail($id);
-        $product->delete();
+        $product->update(['status' => 'trash']);
 
         return response()->json(['success' => true]);
     }
