@@ -1,0 +1,207 @@
+info:
+  title: Fitness Food API
+  description: This API get data from a open source database and migrate from a MYSQL database.
+  version: 1.0.0
+basePath: /v1
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /products:
+    get:
+      summary: Return a product list
+      description: >
+        This endpoint return a product list.
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                code:
+                  type: integer
+                  example: 12345678
+                status:
+                  type: string
+                  example: draft
+                imported_t:
+                  type: dateTime
+                  example: '2023-04-13 18:06:42'
+                url:
+                  type: string
+                  example: 'http://world-en.openfoodfacts.org/product/9999992756068/steak-hache'
+                creator:
+                  type: string
+                  example: Jhon Lennister
+                created_t:
+                  type: bigInteger
+                  example: 1681412135
+                last_modified_t:
+                  type: bigInteger
+                  example: 1681412235
+                product_name:
+                  type: string
+                  example: Tomato
+                quantity:
+                  type: string
+                  example: 30Kg
+                brands:
+                  type: string
+                  example: Codil
+                categories:
+                  type: categories
+                  example: Food
+                labels:
+                  type: string
+                  example: ThisIS
+                cities:
+                  type: string
+                  example: Bocaiuva
+                purchase_places:
+                  type: string
+                  example: Braga
+                stores:
+                 type: string
+                 example: Lidl
+                ingredients_text:
+                  type: string
+                  example: "farinha de trigo, açúcar, óleo vegetal de girassol, clara de ovo, ovo, humidificante (sorbitol), levedantes químicos (difosfato dissódico, hidrogenocarbonato de sódio), xarope de glucose-frutose, sal, aroma",
+                traces:
+                  type: string
+                  example: "Frutos de casca rija,Leite,Soja,Sementes de sésamo,Produtos à base de sementes de sésamo"
+                serving_size:
+                  type: string
+                  example: "madalena 31.7 g"
+                serving_quantity:
+                  type: float
+                  example: 31.7
+                nutriscore_score:
+                  type: float
+                  example: 17.14
+                nutriscore_grade:
+                  type: string
+                  example: "d"
+                main_category:
+                 type: string
+                 example: "en:madeleines"
+                image_url:
+                  type: string
+                  example: "https://static.openfoodfacts.org/images/products/20221126/front_pt.5.400.jpg"
+        422:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+    post:
+      summary: Save a JSONL in database
+      description: >
+        This endpoint return a store method.
+      responses:
+        201:
+          description: CREATED
+          schema:
+            type: JSONL
+            items:
+              type: JSON
+              properties:
+               file:
+                type: jsonl
+        422:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+    put:
+      summary: Save a JSONL in database
+      description: >
+        This endpoint return a store method.
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                code:
+                  type: integer
+                  example: 12345678
+                status:
+                  type: string
+                  example: draft
+                imported_t:
+                  type: dateTime
+                  example: '2023-04-13 18:06:42'
+                url:
+                  type: string
+                  example: 'http://world-en.openfoodfacts.org/product/9999992756068/steak-hache'
+                creator:
+                  type: string
+                  example: Jhon Lennister
+                created_t:
+                  type: bigInteger
+                  example: 1681412135
+                last_modified_t:
+                  type: bigInteger
+                  example: 1681412235
+                product_name:
+                  type: string
+                  example: Tomato
+                quantity:
+                  type: string
+                  example: 30Kg
+                brands:
+                  type: string
+                  example: Codil
+                categories:
+                  type: categories
+                  example: Food
+                labels:
+                  type: string
+                  example: ThisIS
+                cities:
+                  type: string
+                  example: Bocaiuva
+                purchase_places:
+                  type: string
+                  example: Braga
+                stores:
+                 type: string
+                 example: Lidl
+                ingredients_text:
+                  type: string
+                  example: "farinha de trigo, açúcar, óleo vegetal de girassol, clara de ovo, ovo, humidificante (sorbitol), levedantes químicos (difosfato dissódico, hidrogenocarbonato de sódio), xarope de glucose-frutose, sal, aroma",
+                traces:
+                  type: string
+                  example: "Frutos de casca rija,Leite,Soja,Sementes de sésamo,Produtos à base de sementes de sésamo"
+                serving_size:
+                  type: string
+                  example: "madalena 31.7 g"
+                serving_quantity:
+                  type: float
+                  example: 31.7
+                nutriscore_score:
+                  type: float
+                  example: 17.14
+                nutriscore_grade:
+                  type: string
+                  example: "d"
+                main_category:
+                 type: string
+                 example: "en:madeleines"
+                image_url:
+                  type: string
+                  example: "https://static.openfoodfacts.org/images/products/20221126/front_pt.5.400.jpg"
+        422:
+          description: Bad Request
+        500:
+          description: Internal Server Error
