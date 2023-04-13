@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\{ProductController, SearchController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +22,5 @@ Route::resource('products', ProductController::class)->except([
     'create',
     'edit',
 ]);
+
+Route::get('search', SearchController::class);
