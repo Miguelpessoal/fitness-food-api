@@ -41,7 +41,7 @@ it('should be able to delete a product', function () {
         ->where('id', $product->id)
         ->first();
 
-    $this->assertNull($deletedProduct);
+    expect($deletedProduct->status)->toBe('trash');
 });
 
 it('should be able to show a product', function () {

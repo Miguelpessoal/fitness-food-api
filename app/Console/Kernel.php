@@ -7,17 +7,17 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * Define the application's command schedule.
-     */
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('import:data')->dailyAt('00:00');
+
+        $schedule
+            ->call(function () {
+                file_put_contents(storage_path('app/cron-last-run'), now());
+            })
+            ->everyMinute();
     }
 
-    /**
-     * Register the commands for the application.
-     */
     protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');

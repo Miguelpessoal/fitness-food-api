@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\{ProductController, SearchController};
+use App\Http\Controllers\{
+    ApiReportController,
+    ProductController,
+    SearchController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::get('/', ApiReportController::class);
 
 Route::resource('products', ProductController::class)->except([
     'create',

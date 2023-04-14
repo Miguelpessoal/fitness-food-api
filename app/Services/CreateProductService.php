@@ -14,11 +14,13 @@ class CreateProductService
         while (!feof($file)) {
             $line = fgets($file);
             $data = json_decode($line, true);
+            $limitCreate = 0;
 
-            if (!empty($data)) {
+            if (!empty($data) && $limitCreate < 100) {
                 $validateData = $this->rules($data);
 
                 Product::create($validateData);
+                $limitCreate++;
             }
         }
 
