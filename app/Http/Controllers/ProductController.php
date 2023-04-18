@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use App\Http\Requests\{StoreProductsRequest, UpdateProductsRequest};
+use App\Http\Requests\{ListProductRequest, StoreProductsRequest, UpdateProductsRequest};
 use App\Models\Product;
 use App\Services\CreateProductService;
 use Illuminate\Http\JsonResponse;
@@ -13,9 +13,10 @@ class ProductController extends Controller
     public function __construct(protected CreateProductService $createProductService)
     {}
 
-    public function index(): JsonResponse
+    public function index(ListProductRequest $request): JsonResponse
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate($request->perPage, ['*'], 'page', $request->page);
+
 
         return response()->json($products);
     }

@@ -30,7 +30,7 @@ class CreateProductService
     public function rules($data): array
     {
         $rules = [
-            'code' => ['integer'],
+            'code' => ['integer', 'unique:products,code'],
             'status' => ['nullable', 'string'],
             'imported_t' => ['nullable', 'date'],
             'url' => ['string'],

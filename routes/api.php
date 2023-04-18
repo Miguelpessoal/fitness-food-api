@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     SearchController
 };
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +23,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/', ApiReportController::class);
+Route::post('/api-key', fn() => ['api_key' => Str::random(60)]);
 
-Route::resource('products', ProductController::class)->except([
-    'create',
-    'edit',
-]);
+Route::middleware('api.key')->group(function () {
+    Route::get('/', ApiReportController::class);
 
-Route::get('search', SearchController::class);
+    Route::resource('products', ProductController::class)->except([
+        'create',
+        'edit',
+    ]);
+
+    Route::get('search', SearchController::class);
+});
